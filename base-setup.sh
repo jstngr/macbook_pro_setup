@@ -78,6 +78,7 @@ apps=(
     scroll-reverser # Tool to reverse the direction of scrolling
     microsoft-outlook
     mattermost # Slack alternative
+    steam # Gaming
 )
 
 # Install apps to /Applications
@@ -97,6 +98,9 @@ osascript -e 'tell application "System Preferences" to quit'
 # General                                                                     #
 ###############################################################################
 echo "General..."
+
+# Enable the battery percentage in the menu bar
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 # Set computer name (as done via System Preferences → Sharing)
 sudo scutil --set ComputerName "INSERT NAME"
@@ -403,9 +407,11 @@ extensions=(
   oderwat.indent-rainbow
   pkief.material-icon-theme
   esbenp.prettier-vscode
+  netcorext.uuid-generator
   alefragnani.project-manager
   meganrogge.template-string-converter
-) 
+  lokalise.i18n-ally 
+)
 
 # install extensions
 for extension in "${extensions[@]}"
@@ -417,17 +423,50 @@ done
 
 # Navigate to the VS Code User Settings directory
 cd ~/Library/Application\ Support/Code/User
+if [ ! -e "settings.json" ]; then
+    touch "settings.json"
+    echo "File created: settings.json"
+else
+    echo "File already exists: settings.json"
+fi
 
 json='{
   "workbench.colorTheme": "Default Dark+",
-    "workbench.startupEditor": "none",
-    "terminal.integrated.shell.osx": "/bin/zsh",
-    "workbench.iconTheme": "material-icon-theme",
-    "editor.defaultFormatter": ".prettierrc",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    }
+  "workbench.startupEditor": "none",
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.defaultFormatter": ".prettierrc",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.tabSize": 2,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "redhat.telemetry.enabled": false,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.autofetch": "all",
+  "svg.preview.mode": "svg",
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "turboConsoleLog.insertEnclosingClass": false,
+  "git.confirmSync": false
 }'
 jq ${json} settings.json > temp.json && mv temp.json settings.json
 
