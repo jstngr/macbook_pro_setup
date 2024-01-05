@@ -46,6 +46,9 @@ brew install tree wget trash n
 # install jq for json edit. Used for vscode settings
 brew install jq
 
+# install node
+brew install node
+
 echo "Cleaning up brew"
 brew cleanup
 
@@ -74,6 +77,7 @@ apps=(
     signal
     scroll-reverser # Tool to reverse the direction of scrolling
     microsoft-outlook
+    mattermost # Slack alternative
 )
 
 # Install apps to /Applications
