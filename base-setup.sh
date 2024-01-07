@@ -79,6 +79,7 @@ apps=(
     microsoft-outlook
     mattermost # Slack alternative
     steam # Gaming
+    tableplus # Database tool
 )
 
 # Install apps to /Applications
